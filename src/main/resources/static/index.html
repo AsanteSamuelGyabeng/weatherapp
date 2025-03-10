@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Info Service</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #6dd5ed, #2193b0);
+            color: #fff;
+        }
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 8px;
+            border: none;
+        }
+        button {
+            background: #ff7e5f;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #feb47b;
+        }
+        #weather-result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <h1>Weather Info Service</h1>
+    <input type="text" id="city" placeholder="Enter city name">
+    <button onclick="getWeather()">Get Weather</button>
+    <div id="weather-result"></div>
+</div>
+<script>
+    function getWeather() {
+    const city = document.getElementById('city').value;
+    fetch(`http://localhost:8080/weather?city=${city}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById('weather-result').innerText = data.error;
+            } else {
+                const result = `
+                    City: ${data.name} (${data.sys.country})\n
+                    Temperature: ${data.main.temp}°C\n
+                    Feels Like: ${data.main.feels_like}°C\n
+                    Weather: ${data.weather[0].description}\n
+                    Humidity: ${data.main.humidity}%\n
+                    Wind Speed: ${data.wind.speed} m/s\n
+                    Clouds: ${data.clouds.all}%
+                `;
+                document.getElementById('weather-result').innerText = result;
+            }
+        })
+        .catch(err => console.error('Error fetching weather:', err));
+}
+
+</script>
+</body>
+</html>
