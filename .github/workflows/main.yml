@@ -2,7 +2,7 @@ name: Build and Push to ECR
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build-and-push:
@@ -27,7 +27,7 @@ jobs:
       env:
         ECR_REGISTRY: public.ecr.aws/h2l8y6e3/weather_ecr
         ECR_REPOSITORY: weather_ecr
-        IMAGE_TAG: SamuelGyabengAsante1_appname
+        IMAGE_TAG: SamuelGyabengAsante_appname
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
