@@ -13,7 +13,7 @@ jobs:
       uses: actions/setup-java@v2
       with:
         distribution: 'adopt'
-        java-version: '17'  # Use appropriate Java version (adjust based on your project)
+        java-version: '21'  # Use appropriate Java version (adjust based on your project)
         
     - name: Build with Maven
       run: mvn clean package -DskipTests  # Skip tests to make build faster, remove -DskipTests if you want to run tests
