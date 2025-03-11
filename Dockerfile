@@ -1,3 +1,5 @@
+FROM ubuntu:latest
+
 # Use an official OpenJDK runtime as the base image
 FROM openjdk:21-jdk-slim
 
@@ -5,7 +7,7 @@ FROM openjdk:21-jdk-slim
 WORKDIR /demo
 
 # Copy the build output from the target folder to the container
-COPY ./demo-0.0.1-SNAPSHOT.jar .
+COPY demo-0.0.1-SNAPSHOT.jar /demo
 
 # Expose the port your Spring Boot app runs on
 EXPOSE 8080
