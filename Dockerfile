@@ -1,16 +1,15 @@
-FROM ubuntu:latest
-
-# Use an official OpenJDK runtime as the base image
+# Use an official OpenJDK 21 runtime as base image
 FROM openjdk:21-jdk-slim
+LABEL authors="SamuelGyabengAsante"
 
 # Set the working directory inside the container
-WORKDIR ./
+WORKDIR /app
 
-# Copy the build output from the target folder to the container
-COPY *.jar ./
+# Copy the built JAR file from the target directory to the container
+COPY target/demo-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose the port your Spring Boot app runs on
+# Expose the application port
 EXPOSE 8080
 
-# Command to run the app
-ENTRYPOINT ["java", "-jar", "demo-0.0.1-SNAPSHOT.jar"]
+# Run the application
+CMD ["java", "-jar", "app.jar"]
