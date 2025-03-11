@@ -27,4 +27,4 @@ jobs:
           docker tag asantegyabengsamuel_weatherapp:latest public.ecr.aws/h2l8y6e3/asantegyabengsamuel_weatherapp:asantegyabengsamuel_weatherapp
       - name: Push image to Amazon ECR Public
         run: |
-          docker push public.ecr.aws/h2l8y6e3/asantegyabengsamuel_weatherapp
+          docker push public.ecr.aws/h2l8y6e3/asantegyabengsamuel_weatherapp:asantegyabengsamuel_weatherapp
