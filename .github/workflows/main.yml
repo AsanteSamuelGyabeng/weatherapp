@@ -24,7 +24,7 @@ jobs:
       - name: Build and tag Docker image
         run: |
           docker build -t asantegyabengsamuel_weatherapp .
-          docker asantegyabengsamuel_weatherapp:latest public.ecr.aws/h2l8y6e3/asantegyabengsamuel_weatherapp:latest
+          docker tag asantegyabengsamuel_weatherapp:latest public.ecr.aws/h2l8y6e3/asantegyabengsamuel_weatherapp:asantegyabengsamuel_weatherapp
       - name: Push image to Amazon ECR Public
         run: |
           docker push public.ecr.aws/h2l8y6e3/asantegyabengsamuel_weatherapp
