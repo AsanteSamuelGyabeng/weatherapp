@@ -9,29 +9,42 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Set up JDK 21
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '21'
+
       - name: Build JAR file with Maven
         run: mvn clean package
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+
       - name: Login to Amazon ECR Public
         uses: aws-actions/amazon-ecr-login@v2
         with:
           registry-type: public
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+
       - name: Build and tag Docker image
         run: |
           docker build -t asantegyabengsamuel_weatherapp .
-          docker tag asantegyabengsamuel_weatherapp:latest public.ecr.aws/h2l8y6e3/asantegyabengsamuel_weatherapp:asantegyabengsamuel_weatherapp
+          docker tag asantegyabengsamuel_weatherapp:latest public.ecr.aws/h2l8y6e3/asantegyabengsamuel_weatherapp:latest
+
       - name: Push image to Amazon ECR Public
         run: |
-          docker push public.ecr.aws/h2l8y6e3/asantegyabengsamuel_weatherapp:asantegyabengsamuel_weatherapp
+          docker push public.ecr.aws/h2l8y6e3/asantegyabengsamuel_weatherapp:latest
+
+      - name: Deploy to ECS
+        run: |
+          aws ecs update-service --cluster my-fargate-cluster \
+            --service weatherapp-service \
+            --force-new-deployment
